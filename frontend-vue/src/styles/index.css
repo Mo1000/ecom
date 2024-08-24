@@ -1,0 +1,5 @@
+@import "base.css";
+
+.bg-project{
+    background-color: var(--body-bg);
+}
