@@ -7,7 +7,7 @@
           type="button"
           @click="onThemeToggler"
         >
-          <i :class="`dark:text-white pi ${iconClass}`" />
+          <i :class="`hover:text-primary-600 dark:text-white pi ${iconClass}`" />
         </button>
       </li>
       <li class="relative">
@@ -23,10 +23,10 @@
           class="inline-flex w-8 h-8 p-0 items-center justify-center surface-0 rounded"
           type="button"
         >
-          <i class="pi pi-palette dark:text-white"></i>
+          <i class="pi pi-palette hover:text-primary-600 dark:text-white"></i>
         </button>
         <div
-          class="absolute top-[2.5rem] right-0 hidden w-[16rem] p-3 bg-white dark:bg-surface-800 rounded-md shadow border border-surface-200 dark:border-surface-700 flex-col justify-start items-start gap-3.5 inline-flex origin-top z-10"
+          class="absolute top-[2.5rem] right-0 w-[16rem] p-3 bg-white dark:bg-surface-800 rounded-md shadow border border-surface-200 dark:border-surface-700 flex-col justify-start items-start gap-3.5 inline-flex origin-top z-10"
         >
           <div class="flex-col justify-start items-start gap-2 inline-flex pr-4">
             <span class="text-sm font-medium">Primary Colors</span>
@@ -68,7 +68,10 @@
               class="inline-flex p-[0.28rem] items-start gap-[0.28rem] rounded-[0.71rem] border border-[#00000003] w-full"
             >
               <SelectButton
-                v-model="$appState.theme"
+                v-model="
+                  // @ts-ignore
+                  $appState.theme
+                "
                 :options="presets"
                 :unselectable="false"
                 @update:modelValue="onPresetChange"
@@ -90,12 +93,7 @@ import { $t, updatePreset, updateSurfacePalette } from '@primevue/themes'
 import Aura from '@primevue/themes/aura'
 import Lara from '@primevue/themes/lara'
 import Nora from '@primevue/themes/nora'
-import {
-  PresetColorEnum,
-  PrimaryColorEnum,
-  SurfaceColorEnum,
-  ThemeEnum
-} from '@/enums/theme.enum.ts'
+import { PresetColorEnum, PrimaryColorEnum, SurfaceColorEnum, ThemeEnum } from '@/enums/theme.enum'
 import { getLocalStorageValue, setLocalStorageValue } from '@/utils/storage/manageLocalStorage'
 import {
   COLOR_STORAGE_NAME,
@@ -533,7 +531,7 @@ export default {
     },
     getPresetExt() {
       const color = this.primaryColors.find((c) => c.name === this.selectedPrimaryColor)
-      if (color.name === PrimaryColorEnum.NOIR) {
+      if (color?.name === PrimaryColorEnum.NOIR) {
         return {
           semantic: {
             primary: {
@@ -582,10 +580,11 @@ export default {
           }
         }
       } else {
+        // @ts-ignore
         if (this.$appState.theme === PresetColorEnum.NORA) {
           return {
             semantic: {
-              primary: color.palette,
+              primary: color?.palette,
               colorScheme: {
                 light: {
                   primary: {
@@ -621,6 +620,7 @@ export default {
         } else {
           return {
             semantic: {
+              // @ts-ignore
               primary: color.palette,
               colorScheme: {
                 light: {
@@ -657,7 +657,7 @@ export default {
         }
       }
     },
-    updateColors(type, color) {
+    updateColors(type: string, color: any) {
       if (type === 'primary') {
         this.selectedPrimaryColor = color.name
         setLocalStorageValue(COLOR_STORAGE_NAME, color.name)
@@ -668,18 +668,20 @@ export default {
 
       this.applyTheme(type, color)
     },
-    applyTheme(type, color) {
+    applyTheme(type: string, color: any) {
       if (type === 'primary') {
         updatePreset(this.getPresetExt())
       } else if (type === 'surface') {
         updateSurfacePalette(color.palette)
       }
     },
-    onRippleChange(value) {
+    onRippleChange(value: any) {
       this.$primevue.config.ripple = value
     },
-    onPresetChange(value) {
+    onPresetChange(value: any) {
+      // @ts-ignore
       this.$appState.theme = value
+      // @ts-ignore
       const preset = presets[value]
       const surfacePalette = this.surfaces.find(
         (s) => s.name === this.selectedSurfaceColor
@@ -704,15 +706,15 @@ export default {
       root.classList.add(SELECTOR_DARK_THEME)
     }
 
-    this.selectedPrimaryColor = getLocalStorageValue(COLOR_STORAGE_NAME)
-    this.selectedSurfaceColor = getLocalStorageValue(SURFACE_STORAGE_NAME)
-    if (this.selectedPrimaryColor) {
+    this.selectedPrimaryColor = getLocalStorageValue(COLOR_STORAGE_NAME) || ''
+    this.selectedSurfaceColor = getLocalStorageValue(SURFACE_STORAGE_NAME) || ''
+    if (this.selectedPrimaryColor.length > 0) {
       this.applyTheme(
         'primary',
         this.primaryColors.find((c) => c.name === this.selectedPrimaryColor)
       )
     }
-    if (this.selectedSurfaceColor) {
+    if (this.selectedSurfaceColor.length > 0) {
       this.applyTheme(
         'surface',
         this.surfaces.find((s) => s.name === this.selectedSurfaceColor)

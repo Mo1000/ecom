@@ -10,10 +10,11 @@ import ToastService from 'primevue/toastservice'
 import AppState from '@/plugins/appState'
 import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
 import { OhVueIcon } from 'oh-vue-icons'
-import Noir from '@/presents/Noir'
+import Noir from '@/presets/Noir'
 import { createRouter, createWebHistory } from 'vue-router'
 import routes from '@/routes'
 import { SELECTOR_DARK_THEME } from '@/constants'
+import '@/utils/importIcons'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

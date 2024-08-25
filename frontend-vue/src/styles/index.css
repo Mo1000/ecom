@@ -1,5 +1,27 @@
 @import "base.css";
-
+@import "components/loader.css";
 .bg-project{
     background-color: var(--body-bg);
+}
+
+.bg-card{
+    @apply bg-gray-50 dark:bg-[var(--p-surface-800)] hover:bg-gray-100 dark:hover:bg-[var(--p-surface-700)];
+}
+
+.border-card-color{
+    @apply border-[var(--border-color)];
+}
+
+.layout-topbar.layout-topbar-sticky {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+   @apply bg-surface-100/50 dark:bg-surface-950/10;
+}
+
+.layout-topbar {
+    left: 0;
+    position: sticky;
+    top: 0;
+    transition: background-color .5s,border-color .5s;
+    z-index: 1100;
 }

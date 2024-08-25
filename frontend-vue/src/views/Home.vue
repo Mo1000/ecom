@@ -39,7 +39,7 @@
         <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
           <h2 id="category-heading" class="text-2xl font-bold tracking-tight">Shop by Category</h2>
           <a
-            class="hidden text-sm font-semibold text-indigo-600 hover:text-selected sm:block"
+            class="hidden text-sm font-semibold text-selected hover:text-primary-600 sm:block"
             href="#"
           >
             Browse all categories
@@ -53,10 +53,10 @@
               <div
                 class="absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0"
               >
-                <a
+                <RouterLink
                   v-for="category in categories"
                   :key="category.name"
-                  :href="category.href"
+                  :to="category.href"
                   class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
                 >
                   <span aria-hidden="true" class="absolute inset-0">
@@ -73,7 +73,7 @@
                   <span class="relative mt-auto text-center text-xl font-bold text-white">{{
                     category.name
                   }}</span>
-                </a>
+                </RouterLink>
               </div>
             </div>
           </div>
@@ -203,27 +203,27 @@
 const categories = [
   {
     name: 'New Arrivals',
-    href: '#',
+    href: 'products',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-01.jpg'
   },
   {
     name: 'Productivity',
-    href: '#',
+    href: 'products',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-02.jpg'
   },
   {
     name: 'Workspace',
-    href: '#',
+    href: 'products',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-04.jpg'
   },
   {
     name: 'Accessories',
-    href: '#',
+    href: 'products',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-05.jpg'
   },
   {
     name: 'Sale',
-    href: '#',
+    href: 'products',
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-03.jpg'
   }
 ]

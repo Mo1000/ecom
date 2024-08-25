@@ -1,4 +1,4 @@
-import Parse from '@/utils/parse/index.ts'
+import Parse from '@/utils/parse/index'
 import type { CreateProductModel, ProductModel } from '@/models/product.model'
 
 class ProductService extends Parse.Object {

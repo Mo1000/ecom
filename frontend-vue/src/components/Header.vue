@@ -1,5 +1,5 @@
 <template>
-  <section class="sticky top-0 z-50 bg-project">
+  <section class="layout-topbar layout-topbar-sticky">
     <!-- Mobile menu -->
     <TransitionRoot :show="mobileMenuOpen" as="template">
       <Dialog class="relative z-40 lg:hidden" @close="mobileMenuOpen = false">
@@ -52,7 +52,7 @@
                       <button
                         :class="[
                           selected ? 'border-selected text-selected' : 'border-transparent ',
-                          'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium'
+                          'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium hover:text-primary-600'
                         ]"
                       >
                         {{ category.name }}
@@ -81,10 +81,10 @@
                             class="object-cover object-center"
                           />
                         </div>
-                        <a :href="item.href" class="mt-6 block text-sm font-medium">
+                        <RouterLink :to="item.href" class="mt-6 block text-sm font-medium">
                           <span aria-hidden="true" class="absolute inset-0 z-10" />
                           {{ item.name }}
-                        </a>
+                        </RouterLink>
                         <p aria-hidden="true" class="mt-1 text-sm">Shop now</p>
                       </div>
                     </div>
@@ -94,18 +94,28 @@
 
               <div class="space-y-6 border-t border-gray-200 px-4 py-6">
                 <div v-for="page in navigation.pages" :key="page.name" class="flow-root">
-                  <a :href="page.href" class="-m-2 block p-2 font-medium">{{ page.name }}</a>
+                  <RouterLink
+                    :to="page.href"
+                    class="-m-2 block p-2 font-medium hover:text-primary-600"
+                    >{{ page.name }}</RouterLink
+                  >
                 </div>
               </div>
 
               <div class="space-y-6 border-t border-gray-200 px-4 py-6">
                 <div class="flow-root">
-                  <a class="-m-2 block p-2 font-medium hover:text-selected" href="#"
+                  <a
+                    class="-m-2 block p-2 font-medium hover:text-selected hover:text-primary-600"
+                    href="#"
                     >Create an account</a
                   >
                 </div>
                 <div class="flow-root">
-                  <a class="-m-2 block p-2 font-medium hover:text-selected" href="#">Sign in</a>
+                  <a
+                    class="-m-2 block p-2 font-medium hover:text-selected hover:text-primary-600"
+                    href="#"
+                    >Sign in</a
+                  >
                 </div>
               </div>
 
@@ -154,7 +164,7 @@
                 >
                   <select
                     id="desktop-currency"
-                    class="flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm font-medium focus:border-transparent focus:outline-none focus:ring-0"
+                    class="flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm text-white font-medium focus:border-transparent focus:outline-none focus:ring-0"
                     name="currency"
                   >
                     <option v-for="currency in currencies" :key="currency">{{ currency }}</option>
@@ -177,7 +187,7 @@
               <div class="flex h-16 items-center justify-between">
                 <!-- Logo (lg+) -->
                 <div class="hidden lg:flex lg:flex-1 lg:items-center">
-                  <a href="#">
+                  <RouterLink to="/">
                     <span class="sr-only">Your Company</span>
                     <img
                       alt=""
@@ -189,7 +199,7 @@
                       class="h-8 w-auto hidden dark:block"
                       src="https://tailwindui.com/img/logos/mark.svg?color=white"
                     />
-                  </a>
+                  </RouterLink>
                 </div>
 
                 <div class="hidden h-full lg:flex">
@@ -206,7 +216,7 @@
                           <PopoverButton
                             :class="[
                               open ? 'text-selected' : '',
-                              'relative z-10   flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out'
+                              'relative z-10  hover:text-primary-600 flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out'
                             ]"
                           >
                             {{ category.name }}
@@ -269,7 +279,7 @@
                         v-for="page in navigation.pages"
                         :key="page.name"
                         :href="page.href"
-                        class="flex items-center text-sm font-medium"
+                        class="flex items-center text-sm font-medium hover:text-primary-600"
                         >{{ page.name }}</a
                       >
                     </div>
@@ -291,17 +301,24 @@
                 </div>
 
                 <!-- Logo (lg-) -->
-                <a class="lg:hidden" href="#">
+                <RouterLink class="lg:hidden" to="/">
                   <span class="sr-only">Your Company</span>
                   <img
                     alt=""
-                    class="h-8 w-auto"
+                    class="h-8 w-auto dark:hidden"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=blue"
+                  />
+                  <img
+                    alt=""
+                    class="h-8 w-auto hidden dark:block"
                     src="https://tailwindui.com/img/logos/mark.svg?color=white"
                   />
-                </a>
+                </RouterLink>
 
                 <div class="flex flex-1 items-center justify-end">
-                  <a class="hidden text-sm font-medium lg:block" href="#">Search</a>
+                  <a class="hidden text-sm font-medium lg:block hover:text-primary-600" href="#"
+                    >Search</a
+                  >
 
                   <div class="flex items-center lg:ml-8">
                     <!-- Help -->
@@ -309,12 +326,17 @@
                       <span class="sr-only">Help</span>
                       <QuestionMarkCircleIcon aria-hidden="true" class="h-6 w-6" />
                     </a>
-                    <a class="hidden text-sm font-medium lg:block" href="#">Help</a>
+                    <a class="hidden text-sm font-medium lg:block hover:text-primary-600" href="#"
+                      >Help</a
+                    >
 
                     <!-- Cart -->
                     <div class="ml-4 flow-root lg:ml-8">
                       <a class="group -m-2 flex items-center p-2" href="#">
-                        <ShoppingBagIcon aria-hidden="true" class="h-6 w-6 flex-shrink-0" />
+                        <ShoppingBagIcon
+                          aria-hidden="true"
+                          class="h-6 w-6 flex-shrink-0 hover:text-primary-600"
+                        />
                         <span class="ml-2 text-sm font-medium">0</span>
                         <span class="sr-only">items in cart, view bag</span>
                       </a>
