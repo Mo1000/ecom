@@ -1,14 +1,9 @@
 <template>
   <Toast />
-  <Header />
-  <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><RouterView /></section>
-
-  <Footer />
+  <main><RouterView /></main>
 </template>
 
 <script lang="ts" setup>
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
 import { useToast } from 'primevue/usetoast'
 import { provide } from 'vue'
 import type { ToastMessageOptions } from 'primevue/toast'

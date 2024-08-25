@@ -13,7 +13,7 @@ import { useProductStore } from '@/store/product.store'
 import DisplayPage from '@/components/DisplayPage.vue'
 import ProductsListComponent from '@/components/product/list/ProductsListComponent.vue'
 
-const itemsPerPage = 12
+const itemsPerPage = 8
 const activePage = ref(1)
 const { setProductsList, setTotalProducts } = useProductStore()
 const isLoading = ref(true)

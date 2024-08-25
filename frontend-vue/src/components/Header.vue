@@ -104,17 +104,17 @@
 
               <div class="space-y-6 border-t border-gray-200 px-4 py-6">
                 <div class="flow-root">
-                  <a
+                  <RouterLink
+                    :to="{ name: 'register' }"
                     class="-m-2 block p-2 font-medium hover:text-selected hover:text-primary-600"
-                    href="#"
-                    >Create an account</a
+                    >Create an account</RouterLink
                   >
                 </div>
                 <div class="flow-root">
-                  <a
+                  <RouterLink
                     class="-m-2 block p-2 font-medium hover:text-selected hover:text-primary-600"
-                    href="#"
-                    >Sign in</a
+                    to="/"
+                    >Sign in</RouterLink
                   >
                 </div>
               </div>
@@ -174,8 +174,12 @@
             </form>
 
             <div class="flex items-center space-x-6 text-white">
-              <a class="text-sm font-medium hover:text-selected" href="#">Sign in</a>
-              <a class="text-sm font-medium hover:text-selected" href="#">Create an account</a>
+              <RouterLink class="text-sm font-medium hover:text-selected" to="#"
+                >Sign in</RouterLink
+              >
+              <RouterLink :to="{ name: 'register' }" class="text-sm font-medium hover:text-selected"
+                >Create an account</RouterLink
+              >
             </div>
           </div>
         </div>

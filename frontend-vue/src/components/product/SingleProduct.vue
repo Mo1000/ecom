@@ -265,13 +265,16 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
-import ProductService from '@/services/product.service'
-import { onMounted, ref, watch } from 'vue'
-import type { ProductModel } from '@/models/product.model'
+import { ref } from 'vue'
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue'
 import { CurrencyDollarIcon, GlobeAmericasIcon } from '@heroicons/vue/24/outline'
 import { StarIcon } from '@heroicons/vue/20/solid'
+import type { ProductModel } from '@/models/product.model'
+
+interface Props {
+  productSelected: ProductModel | null
+}
+defineProps<Props>()
 
 const product = {
   name: 'Basic Tee',
@@ -367,22 +370,4 @@ const relatedProducts = [
 
 const selectedColor = ref(product.colors[0])
 const selectedSize = ref(product.sizes[2])
-
-const route = useRoute()
-const objectId = route.params.id?.toString() || ''
-const productSelected = ref<ProductModel | undefined>(undefined)
-async function fetchProduct() {
-  productSelected.value = await ProductService.getProductById(objectId)
-}
-
-onMounted(() => {
-  fetchProduct()
-})
-
-watch(
-  () => route.params.id,
-  () => {
-    fetchProduct()
-  }
-)
 </script>

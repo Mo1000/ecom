@@ -26,7 +26,7 @@
           <i class="pi pi-palette hover:text-primary-600 dark:text-white"></i>
         </button>
         <div
-          class="absolute top-[2.5rem] right-0 w-[16rem] p-3 bg-white dark:bg-surface-800 rounded-md shadow border border-surface-200 dark:border-surface-700 flex-col justify-start items-start gap-3.5 inline-flex origin-top z-10"
+          class="absolute hidden top-[2.5rem] right-0 w-[16rem] p-3 bg-white dark:bg-surface-800 rounded-md shadow border border-surface-200 dark:border-surface-700 flex-col justify-start items-start gap-3.5 origin-top z-10"
         >
           <div class="flex-col justify-start items-start gap-2 inline-flex pr-4">
             <span class="text-sm font-medium">Primary Colors</span>

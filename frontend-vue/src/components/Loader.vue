@@ -2,7 +2,8 @@
 
 <template>
   <div
-    class="bg-white fixed z-50 w-full h-full top-0 left-0 justify-center items-center flex loader-container"
+    class="bg-white dark:bg-surface-800 fixed w-full h-full top-0 left-0 justify-center items-center flex loader-container"
+    style="z-index: 101"
   >
     <div class="flex flex-col items-center justify-center w-full">
       <svg

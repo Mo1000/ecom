@@ -73,9 +73,14 @@ class ProductService extends Parse.Object {
       if (pagination.limit) query.limit(pagination.limit)
       if (pagination.skip) query.skip(pagination.skip)
     }
+    query.withCount()
+    const res = (await query.find({ json: true })) as unknown as {
+      results: ProductModel[]
+      count: number
+    }
     return {
-      products: (await query.find({ json: true })) as ProductService[],
-      total: await query.count()
+      products: res.results,
+      total: res.count
     }
   }
 

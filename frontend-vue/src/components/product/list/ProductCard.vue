@@ -18,7 +18,7 @@
         </div>
 
         <RouterLink
-          :to="`/product/${product.objectId}`"
+          :to="linkToProduct"
           class="eye-icon bg-white dark:bg-[var(--p-surface-600)] rounded-full w-8 h-8 flex justify-center items-center cursor-pointer"
         >
           <v-icon
@@ -126,7 +126,7 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, ref, toRefs } from 'vue'
+import { computed, inject, ref, toRefs } from 'vue'
 import type { ProductModel } from '@/models/product.model'
 import { ToastInjectionKey } from '@/constants/injectionKey'
 import { SwalCustom } from '@/utils/swalUtils'
@@ -180,4 +180,12 @@ const handleDeleteItem = async () => {
     preConfirm: request
   })
 }
+const linkToProduct = computed(() => {
+  return {
+    name: 'product',
+    params: {
+      id: product.value.objectId
+    }
+  }
+})
 </script>
