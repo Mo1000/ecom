@@ -78,6 +78,8 @@
                   :id="nameFields.userName"
                   v-model="userName"
                   :invalid="!!errors?.userName"
+                  aria-autocomplete="both"
+                  autocomplete="username"
                   fluid
                   placeholder="User Name"
                   type="text"
@@ -90,6 +92,7 @@
                   :id="nameFields.firstName"
                   v-model="firstName"
                   :invalid="!!errors?.firstName"
+                  autocomplete="given-name"
                   fluid
                   placeholder="First Name"
                   type="text"
@@ -102,6 +105,7 @@
                   :id="nameFields.lastName"
                   v-model="lastName"
                   :invalid="!!errors?.lastName"
+                  autocomplete="family-name"
                   fluid
                   placeholder="Last Name"
                   type="text"
@@ -131,13 +135,14 @@
                 Fill in your contact information
               </div>
               <div class="field">
-                <InputMask
+                <InputText
                   :id="nameFields.phone"
                   v-model="phone"
                   :invalid="!!errors?.phone"
+                  autocomplete="tel"
                   fluid
-                  mask="(229) 61-61-61-61"
                   placeholder="Phone"
+                  type="tel"
                   v-bind="phoneAttrs"
                 />
                 <ErrorMessageField v-if="errors?.phone" :error="errors?.phone" />
@@ -147,6 +152,7 @@
                   :id="nameFields.email"
                   v-model="email"
                   :invalid="!!errors?.email"
+                  autocomplete="email"
                   fluid
                   placeholder="Email"
                   type="email"
@@ -161,9 +167,26 @@
                   :invalid="!!errors?.password"
                   autocomplete="new-password"
                   fluid
+                  mediumRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
                   placeholder="Password"
+                  strongRegex='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$'
+                  toggleMask
                   v-bind="passwordAttrs"
-                />
+                >
+                  <template #header>
+                    <div class="font-semibold text-xm mb-4">Pick a password</div>
+                  </template>
+                  <template #footer>
+                    <Divider />
+                    <ul class="pl-2 ml-2 my-0 leading-normal">
+                      <li>At least one lowercase</li>
+                      <li>At least one uppercase</li>
+                      <li>At least one numeric</li>
+                      <li>At least special characters</li>
+                      <li>Minimum 8 characters</li>
+                    </ul>
+                  </template>
+                </Password>
                 <ErrorMessageField v-if="errors?.password" :error="errors?.password" />
               </div>
 
@@ -179,6 +202,7 @@
                   icon="pi pi-arrow-right"
                   iconPos="right"
                   label="Next"
+                  type="submit"
                   @click="
                     enableNextStep([nameFields.phone, nameFields.email, nameFields.password], () =>
                       activateCallback(3)
@@ -188,37 +212,29 @@
               </div>
             </div>
           </StepPanel>
-          <StepPanel v-slot="{ activateCallback }" :value="3">
-            <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
-              <div class="field">
-                <FileUpload
-                  :ref="avatar"
-                  :maxFileSize="1000000"
-                  accept="image/*"
-                  mode="basic"
-                  url="/api/upload"
-                  v-bind="avatarAttrs"
-                  @upload="onUpload"
+          <StepPanel :value="3">
+            <div
+              class="flex flex-col gap-2 items-center mx-auto"
+              style="min-height: 16rem; max-width: 24rem"
+            >
+              <div class="text-center mt-4 mb-4 text-xl font-semibold">
+                Account created successfully
+              </div>
+              <div class="text-center">
+                <img
+                  alt="logo"
+                  src="https://primefaces.org/cdn/primevue/images/stepper/content.svg"
                 />
               </div>
-              <!--              <div class="text-center mt-4 mb-4 text-xl font-semibold">-->
-              <!--                Account created successfully-->
-              <!--              </div>-->
-              <!--              <div class="text-center">-->
-              <!--                <img-->
-              <!--                  alt="logo"-->
-              <!--                  src="https://primefaces.org/cdn/primevue/images/stepper/content.svg"-->
-              <!--                />-->
-              <!--              </div>-->
             </div>
-            <div class="flex pt-6 justify-start">
-              <Button
-                icon="pi pi-arrow-left"
-                label="Back"
-                severity="secondary"
-                @click="activateCallback(2)"
-              />
-            </div>
+            <!--            <div class="flex pt-6 justify-start">-->
+            <!--              <Button-->
+            <!--                icon="pi pi-arrow-left"-->
+            <!--                label="Back"-->
+            <!--                severity="secondary"-->
+            <!--                @click="activateCallback(2)"-->
+            <!--              />-->
+            <!--            </div>-->
           </StepPanel>
         </form>
       </StepPanels>
@@ -227,12 +243,11 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, ref } from 'vue'
+import { ref } from 'vue'
 import { useForm } from 'vee-validate'
 import ErrorMessageField from '@/components/ErrorMessageField.vue'
 import { registerSchemaForm } from '@/utils/formValidator/yupSchema'
 import type { RegisterModel } from '@/models/auth/register.model'
-import { ToastInjectionKey } from '@/constants/injectionKey'
 import { customsValidationMessages } from '@/utils/formValidator/customValidatorMessages'
 
 type RegisterModelKey = keyof RegisterModel
@@ -242,7 +257,6 @@ const nameFields: Record<RegisterModelKey, RegisterModelKey> = {
   password: 'password',
   lastName: 'lastName',
   firstName: 'firstName',
-  avatar: 'avatar',
   phone: 'phone'
 }
 
@@ -280,14 +294,7 @@ const [password, passwordAttrs] = defineField(nameFields.password)
 const [userName, userNameAttrs] = defineField(nameFields.userName)
 const [lastName, lastNameAttrs] = defineField(nameFields.lastName)
 const [firstName, firstNameAttrs] = defineField(nameFields.firstName)
-const [avatar, avatarAttrs] = defineField(nameFields.avatar)
 const [phone, phoneAttrs] = defineField(nameFields.phone)
 
 const activeStep = ref(1)
-const toastProvider = inject(ToastInjectionKey)
-
-const onUpload = () => {
-  console.log('File Uploaded')
-  toastProvider?.showToast('File Uploaded', { severity: 'info', summary: 'Success', life: 3000 })
-}
 </script>
