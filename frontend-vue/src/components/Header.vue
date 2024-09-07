@@ -64,7 +64,7 @@
                   <TabPanel
                     v-for="category in navigation.categories"
                     :key="category.name"
-                    class="space-y-12 px-4 py-6"
+                    class="space-y-12 px-4 py-6 transform -translate-x-1/2"
                   >
                     <div class="grid grid-cols-2 gap-x-4 gap-y-10">
                       <div

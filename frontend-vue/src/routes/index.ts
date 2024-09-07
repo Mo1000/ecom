@@ -2,8 +2,8 @@ import { type RouterOptions } from 'vue-router'
 import Home from '@/views/Home.vue'
 import ProductsList from '@/views/ProductsList.vue'
 import SingleProduct from '@/components/product/SingleProduct.vue'
-import MainLayout from '@/components/layout/MainLayout.vue'
-import AuthLayout from '@/components/layout/AuthLayout.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
+import AuthLayout from '@/layouts/AuthLayout.vue'
 import Register from '@/views/Register.vue'
 
 const routes: RouterOptions['routes'] = [

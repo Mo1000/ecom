@@ -1,2 +1,2 @@
-require("./functions/product");
+require("./functions/course");
 require("./functions/user");

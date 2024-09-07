@@ -1,5 +1,10 @@
-const logger = require("pino");
+const pino = require("pino");
+const pretty = require("pino-pretty");
 
+
+const stream = pretty({
+  colorize: true
+})
 const levels = {
   basic: 10,
   debug: 20,
@@ -8,8 +13,7 @@ const levels = {
   error: 50,
   fatal: 60,
 };
-
-module.exports = logger({
+const logger = pino({
   customLevels: levels, // our defined levels
   useOnlyCustomLevels: true,
   level: "basic",
@@ -21,4 +25,6 @@ module.exports = logger({
       translateTime: "yyyy-dd-mm, h:MM:ss TT",
     },
   },
-});
+},stream);
+
+module.exports = logger;
