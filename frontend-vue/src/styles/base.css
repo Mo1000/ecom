@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 
+
+
+
+
+
 /* color palette from <https://github.com/vuejs/theme> */
 /*:root {*/
 /*  --vt-c-white: #ffffff;*/
@@ -26,7 +31,7 @@
 /*  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);*/
 /*}*/
 
-/*!* semantic color variables for this project *!*/
+/* semantic color variables for this project */
 /*:root {*/
 /*  --color-background: var(--vt-c-white);*/
 /*  --color-background-soft: var(--vt-c-white-soft);*/
@@ -55,31 +60,6 @@
 /*  }*/
 /*}*/
 
-:root {
-  --body-bg: var(--p-surface-50);
-  --body-text-color: var(--p-surface-900);
-  --card-border: 1px solid var(--border-color);
-  --card-bg: var(--p-surface-0);
-  --border-color: var(--p-surface-200);
-  --text-color: var(--p-surface-700);
-  --overlay-background: #ffffff;
-  --color-selected: var(--p-primary-color);
-  --topbar-sticky-background: hsla(0, 0%, 100%, .7);
-
-}
-
-:root[class='p-dark'] {
-  --body-bg: var(--p-surface-950);
-  --body-text-color: var(--p-surface-50);
-  --card-border: 1px solid transparent;
-  --card-bg: var(--p-surface-900);
-  /*--border-color: rgba(255, 255, 255, 0.1);*/
-  --border-color: var(--p-surface-600);
-  --text-color: var(--p-surface-0);
-  --overlay-background: var(--p-surface-900);
-  --topbar-sticky-background: rgba(0, 0, 0, .3);
-}
-
 *,
 *::before,
 *::after {
@@ -90,25 +70,25 @@
 
 body {
   min-height: 100vh;
-  /*color: var(--color-text);*/
-  /*background: var(--color-background);*/
+  color: var(--color-text);
+  background: var(--color-background);
   transition:
-    color 0.5s,
-    background-color 0.5s;
+          color 0.5s,
+          background-color 0.5s;
   line-height: 1.6;
   font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
+          Inter,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Fira Sans',
+          'Droid Sans',
+          'Helvetica Neue',
+          sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -116,25 +96,8 @@ body {
 }
 
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  background-color: var(--body-bg);
-  font-weight: normal;
-  color: var(--body-text-color);
-    transition: color 0.5s, background-color 0.5s;
 
-}
 
 button {
   @apply focus-visible:outline-none;
 }
-.card {
-  background: var(--card-bg);
-  border: var(--card-border);
-@apply p-4;
-}
-
-

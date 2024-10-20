@@ -7,20 +7,7 @@
     </div>
     <div class="w-full xl:w-[800px]">
       <div class="flex justify-center">
-        <div class="w-[400px] select-button-container">
-          <SelectButton
-            v-model="value"
-            :options="options"
-            aria-labelledby="basic"
-            class="rounded-full w-96"
-          >
-            <template #option="slotProps"
-              ><RouterLink :to="getRoute(slotProps.option)" class="!w-40">
-                <span>{{ slotProps.option }}</span>
-              </RouterLink>
-            </template>
-          </SelectButton>
-        </div>
+        <div class="w-[400px] select-button-container"></div>
       </div>
       <div>
         <RouterView />
@@ -30,7 +17,6 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
-import SelectButton from 'primevue/selectbutton'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -52,20 +38,3 @@ const getRoute = (path: string) => {
 const value = ref(routes.find((val: any) => val.route === route.name)?.path || path[0])
 const options = ref(path)
 </script>
-
-<style lang="postcss">
-.p-togglebutton {
-  border-radius: 9999px !important;
-  &:before {
-    border-radius: 9999px !important;
-  }
-}
-</style>
-
-<style lang="postcss" scoped>
-.select-button-container {
-  background: var(--p-togglebutton-background);
-  border-radius: 9999px !important;
-  @apply flex justify-center;
-}
-</style>

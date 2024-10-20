@@ -8,14 +8,15 @@
 import { onMounted, ref } from 'vue'
 
 import CourseService from '@/services/course.service'
-import type { ProductModel } from '@/models/product.model'
-import { useProductStore } from '@/store/product.store'
+
 import DisplayPage from '@/components/DisplayPage.vue'
 import ProductsListComponent from '@/components/product/list/ProductsListComponent.vue'
+import type { CourseModel } from '@/models/course/course.model'
+import { useCourseStore } from '@/stores/course.store'
 
 const itemsPerPage = 8
 const activePage = ref(1)
-const { setProductsList, setTotalProducts } = useProductStore()
+const { setProductsList, setTotalProducts } = useCourseStore()
 const isLoading = ref(true)
 onMounted(() => {
   ;(async () => {
@@ -27,7 +28,7 @@ onMounted(() => {
         limit: itemsPerPage,
         skip
       })
-      setProductsList(res.products as unknown as ProductModel[])
+      setProductsList(res.products as unknown as CourseModel[])
       setTotalProducts(res.total)
     } catch (e) {
       setProductsList([])

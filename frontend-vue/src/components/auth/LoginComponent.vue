@@ -2,14 +2,12 @@
   <section>
     <form class="flex flex-col gap-5 w-[500px] items-center" @submit="onSubmit">
       <div class="field">
-        <InputText
+        <input
           :id="nameFields.email"
           v-model="email"
           :class="classInput"
-          :invalid="!!errors?.email"
           aria-autocomplete="both"
           autocomplete="email"
-          fluid
           placeholder="Email"
           type="email"
           v-bind="emailAttrs"
@@ -17,33 +15,15 @@
         <ErrorMessageField v-if="errors?.email" :error="errors?.email" />
       </div>
       <div class="field">
-        <Password
+        <input
           :id="nameFields.password"
           v-model="password"
           :class="classInput"
-          :invalid="!!errors?.password"
           autocomplete="new-password"
-          fluid
           placeholder="Password"
-          toggleMask
+          type="password"
           v-bind="passwordAttrs"
-        >
-          <!--          mediumRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"-->
-          <!--          strongRegex='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$'-->
-          <template #header>
-            <div class="font-semibold text-xm mb-4">Pick a password</div>
-          </template>
-          <template #footer>
-            <Divider />
-            <ul class="pl-2 ml-2 my-0 leading-normal">
-              <li>At least one lowercase</li>
-              <li>At least one uppercase</li>
-              <li>At least one numeric</li>
-              <li>At least special characters</li>
-              <li>Minimum 8 characters</li>
-            </ul>
-          </template>
-        </Password>
+        />
         <ErrorMessageField v-if="errors?.password" :error="errors?.password" />
       </div>
       <Button :class="classInput" label="Submit" type="submit" />

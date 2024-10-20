@@ -345,8 +345,6 @@
                         <span class="sr-only">items in cart, view bag</span>
                       </a>
                     </div>
-
-                    <ThemeSwitcher />
                   </div>
                 </div>
               </div>
@@ -382,7 +380,6 @@ import {
   XMarkIcon
 } from '@heroicons/vue/24/outline'
 import { ref } from 'vue'
-import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
 
 const mobileMenuOpen = ref(false)
 const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP']

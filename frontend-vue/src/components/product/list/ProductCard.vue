@@ -126,23 +126,21 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, ref, toRefs } from 'vue'
-import type { ProductModel } from '@/models/product.model'
-import { ToastInjectionKey } from '@/constants/injectionKey'
+import { computed, ref, toRefs } from 'vue'
 import { SwalCustom } from '@/utils/swalUtils'
 import CourseService from '@/services/course.service'
 import { optimizeUrl } from '@/utils'
-import { useProductStore } from '@/store/product.store'
+import { useCourseStore } from '@/stores/course.store'
+import type { CourseModel } from '@/models/course/course.model'
 
-const toastProvider = inject(ToastInjectionKey)
 const props = defineProps<Props>()
 const { product } = toRefs(props)
 
 interface Props {
-  product: ProductModel
+  product: CourseModel
 }
 
-const { setProductsList } = useProductStore()
+const { setCoursesList } = useCourseStore()
 
 const heartClick = ref(false)
 
@@ -154,16 +152,11 @@ const handleDeleteItem = async () => {
   const request = async () => {
     try {
       await CourseService.deleteProduct(product.value.objectId)
-      setProductsList((prev) => {
+      setCoursesList((prev) => {
         return prev.filter((item) => item.objectId != product.value.objectId)
       })
-      toastProvider?.showToast('Delete successfully', {
-        severity: 'success'
-      })
     } catch (e) {
-      toastProvider?.showToast('Delete failed', {
-        severity: 'error'
-      })
+      /* empty */
     }
   }
 

@@ -3,19 +3,18 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import Components from 'unplugin-vue-components/vite'
-import { PrimeVueResolver } from '@primevue/auto-import-resolver'
+import autoprefixer from 'autoprefixer'
+import tailwind from 'tailwindcss'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueJsx(),
-    vueDevTools(),
-    Components({
-      resolvers: [PrimeVueResolver()]
-    })
-  ],
+  css: {
+    postcss: {
+      plugins: [tailwind(), autoprefixer()]
+    }
+  },
+  plugins: [vue(), vueJsx(), vueDevTools()],
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
