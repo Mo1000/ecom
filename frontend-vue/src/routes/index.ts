@@ -5,12 +5,16 @@ import SingleProduct from '@/components/product/SingleProduct.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 import AuthLayout from '@/layouts/AuthLayout.vue'
 import Register from '@/views/Register.vue'
+import Login from '@/views/Login.vue'
 
 const routes: RouterOptions['routes'] = [
   {
     path: '/auth',
     component: AuthLayout,
-    children: [{ path: 'register', component: Register, name: 'register' }]
+    children: [
+      { path: 'register', component: Register, name: 'register' },
+      { path: 'login', component: Login, name: 'login' }
+    ]
   },
   {
     path: '/',

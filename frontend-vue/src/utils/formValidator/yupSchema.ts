@@ -20,3 +20,11 @@ export const registerSchemaForm = yup.object({
   avatar: yup.string().optional(),
   password: validPassword
 })
+
+export const loginSchemaForm = yup.object({
+  email: yup
+    .string()
+    .email(customsValidationMessages.mustBeEmail)
+    .required(customsValidationMessages.required),
+  password: yup.string().required(customsValidationMessages.required)
+})

@@ -1,13 +1,15 @@
-export const ROLES = {
-    ADMIN:"admin",
-    INSTRUCTOR:"instructor",
-    STUDENT:"student"
-}
+const ROLES = {
+  STUDENT: 'student',
+  INSTRUCTOR: 'instructor',
+  ADMIN: 'administrator',
+  SUPERADMIN: 'superadministrator',
+};
 
-export const ACCESS_TIME= {
-    LIFE_TIME: "Lifetime",
-    THREE_MONTHS: "Three Months",
-    SIX_MONTHS: "Six Months",
-    ONE_YEAR: "1 Year"
+const ACCESS_TIME = {
+  LIFE_TIME: 'Lifetime',
+  THREE_MONTHS: 'Three Months',
+  SIX_MONTHS: 'Six Months',
+  ONE_YEAR: '1 Year',
+};
 
-}
+module.exports = { ROLES, ACCESS_TIME };

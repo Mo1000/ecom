@@ -1,64 +1,52 @@
 <template>
-  <div class="card flex justify-center">
+  <div class="flex justify-center">
     <Stepper v-model:value="activeStep" class="basis-[40rem]">
       <StepList>
-        <Step v-slot="{ activateCallback, value, a11yAttrs }" :value="1" asChild>
-          <div class="flex flex-row flex-auto gap-2" v-bind="a11yAttrs.root">
-            <button
-              class="bg-transparent border-0 inline-flex flex-col gap-2"
-              v-bind="a11yAttrs.header"
-              @click="activateCallback"
-            >
+        <Step v-slot="{ value, a11yAttrs }" :value="1" asChild class="bg-transparent">
+          <div class="flex flex-row justify-center items-center w-full" v-bind="a11yAttrs.root">
+            <button class="bg-transparent border-0 inline-flex flex-col gap-2">
+              <!--              v-bind="a11yAttrs.header"-->
+              <!--              @click="activateCallback"-->
               <span
                 :class="[
                   'rounded-full border-2 w-12 h-12 inline-flex items-center justify-center',
                   {
                     'bg-primary text-primary-contrast border-primary': Number(value) <= activeStep,
-                    'border-surface-200 dark:border-surface-700': Number(value) > activeStep
+                    'hidden ': Number(value) > activeStep
                   }
                 ]"
               >
                 <i class="pi pi-user" />
               </span>
             </button>
-            <Divider />
           </div>
         </Step>
-        <Step v-slot="{ activateCallback, value, a11yAttrs }" :value="2" asChild>
+        <Step v-slot="{ value, a11yAttrs }" :value="2" asChild>
           <div class="flex flex-row flex-auto gap-2 pl-2" v-bind="a11yAttrs.root">
-            <button
-              class="bg-transparent border-0 inline-flex flex-col gap-2"
-              v-bind="a11yAttrs.header"
-              @click="activateCallback"
-            >
+            <button class="bg-transparent border-0 inline-flex flex-col gap-2">
               <span
                 :class="[
                   'rounded-full border-2 w-12 h-12 inline-flex items-center justify-center',
                   {
                     'bg-primary text-primary-contrast border-primary': Number(value) <= activeStep,
-                    'border-surface-200 dark:border-surface-700': Number(value) > activeStep
+                    'hidden ': Number(value) > activeStep
                   }
                 ]"
               >
                 <i class="pi pi-star" />
               </span>
             </button>
-            <Divider />
           </div>
         </Step>
-        <Step v-slot="{ activateCallback, value, a11yAttrs }" :value="3" asChild>
+        <Step v-slot="{ value, a11yAttrs }" :value="3" asChild>
           <div class="flex flex-row pl-2" v-bind="a11yAttrs.root">
-            <button
-              class="bg-transparent border-0 inline-flex flex-col gap-2"
-              v-bind="a11yAttrs.header"
-              @click="activateCallback"
-            >
+            <button class="bg-transparent border-0 inline-flex flex-col gap-2">
               <span
                 :class="[
                   'rounded-full border-2 w-12 h-12 inline-flex items-center justify-center',
                   {
                     'bg-primary text-primary-contrast border-primary': Number(value) <= activeStep,
-                    'border-surface-200 dark:border-surface-700': Number(value) > activeStep
+                    'hidden ': Number(value) > activeStep
                   }
                 ]"
               >
@@ -70,13 +58,14 @@
       </StepList>
       <StepPanels>
         <form @submit="onSubmit">
-          <StepPanel v-slot="{ activateCallback }" :value="1">
+          <StepPanel v-slot="{ activateCallback }" :value="1" class="step-panel">
             <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 20rem">
               <div class="text-center mt-4 mb-4 text-xl font-semibold">Create your account</div>
               <div class="field">
                 <InputText
-                  :id="nameFields.userName"
+                  :id="nameFields.username"
                   v-model="userName"
+                  :class="classInput"
                   :invalid="!!errors?.userName"
                   aria-autocomplete="both"
                   autocomplete="username"
@@ -91,6 +80,7 @@
                 <InputText
                   :id="nameFields.firstName"
                   v-model="firstName"
+                  :class="classInput"
                   :invalid="!!errors?.firstName"
                   autocomplete="given-name"
                   fluid
@@ -104,6 +94,7 @@
                 <InputText
                   :id="nameFields.lastName"
                   v-model="lastName"
+                  :class="classInput"
                   :invalid="!!errors?.lastName"
                   autocomplete="family-name"
                   fluid
@@ -121,7 +112,7 @@
                   label="Next"
                   @click="
                     enableNextStep(
-                      [nameFields.userName, nameFields.firstName, nameFields.lastName],
+                      [nameFields.username, nameFields.firstName, nameFields.lastName],
                       () => activateCallback(2)
                     )
                   "
@@ -138,6 +129,7 @@
                 <InputText
                   :id="nameFields.phone"
                   v-model="phone"
+                  :class="classInput"
                   :invalid="!!errors?.phone"
                   autocomplete="tel"
                   fluid
@@ -151,6 +143,7 @@
                 <InputText
                   :id="nameFields.email"
                   v-model="email"
+                  :class="classInput"
                   :invalid="!!errors?.email"
                   autocomplete="email"
                   fluid
@@ -243,6 +236,11 @@
 </template>
 
 <script lang="ts" setup>
+import Stepper from 'primevue/stepper'
+import StepList from 'primevue/steplist'
+import StepPanels from 'primevue/steppanels'
+import Step from 'primevue/step'
+import StepPanel from 'primevue/steppanel'
 import { ref } from 'vue'
 import { useForm } from 'vee-validate'
 import ErrorMessageField from '@/components/ErrorMessageField.vue'
@@ -251,13 +249,25 @@ import type { RegisterModel } from '@/models/auth/register.model'
 import { customsValidationMessages } from '@/utils/formValidator/customValidatorMessages'
 
 type RegisterModelKey = keyof RegisterModel
+
+const classInput = '!rounded-full'
 const nameFields: Record<RegisterModelKey, RegisterModelKey> = {
-  userName: 'userName',
+  username: 'username',
   email: 'email',
   password: 'password',
   lastName: 'lastName',
   firstName: 'firstName',
-  phone: 'phone'
+  phone: 'phone',
+  bio: 'bio',
+  linkedin: 'linkedin',
+  location: 'location',
+  website: 'website',
+  profilePhoto: 'profilePhoto',
+  twitter: 'twitter',
+  facebook: 'facebook',
+  youtube: 'youtube',
+  gender: 'gender',
+  designation: 'designation'
 }
 
 const formHelpers = useForm<RegisterModel>({
@@ -291,10 +301,26 @@ const enableNextStep = (fieldOfStep: RegisterModelKey[], activateCallback: () =>
 
 const [email, emailAttrs] = defineField(nameFields.email)
 const [password, passwordAttrs] = defineField(nameFields.password)
-const [userName, userNameAttrs] = defineField(nameFields.userName)
+const [userName, userNameAttrs] = defineField(nameFields.username)
 const [lastName, lastNameAttrs] = defineField(nameFields.lastName)
 const [firstName, firstNameAttrs] = defineField(nameFields.firstName)
 const [phone, phoneAttrs] = defineField(nameFields.phone)
+const [bio, bioAttrs] = defineField(nameFields.bio)
+const [linkedin, linkedinAttrs] = defineField(nameFields.linkedin)
+const [location, locationAttrs] = defineField(nameFields.location)
+const [website, websiteAttrs] = defineField(nameFields.website)
+const [profilePhoto, profilePhotoAttrs] = defineField(nameFields.profilePhoto)
+const [twitter, twitterAttrs] = defineField(nameFields.twitter)
+const [facebook, facebookAttrs] = defineField(nameFields.facebook)
+const [youtube, youtubeAttrs] = defineField(nameFields.youtube)
+const [designation, designationAttrs] = defineField(nameFields.designation)
+const [gender, genderAttrs] = defineField(nameFields.gender)
 
 const activeStep = ref(1)
 </script>
+
+<style lang="postcss">
+.step-panel {
+  background-color: transparent !important;
+}
+</style>

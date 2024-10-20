@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 
-import ProductService from '@/services/product.service'
+import CourseService from '@/services/course.service'
 import type { ProductModel } from '@/models/product.model'
 import { useProductStore } from '@/store/product.store'
 import DisplayPage from '@/components/DisplayPage.vue'
@@ -23,7 +23,7 @@ onMounted(() => {
       isLoading.value = true
       const skip = (activePage.value - 1) * itemsPerPage
 
-      const res = await ProductService.getProductsByAny({
+      const res = await CourseService.getProductsByAny({
         limit: itemsPerPage,
         skip
       })

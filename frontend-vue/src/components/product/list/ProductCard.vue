@@ -130,7 +130,7 @@ import { computed, inject, ref, toRefs } from 'vue'
 import type { ProductModel } from '@/models/product.model'
 import { ToastInjectionKey } from '@/constants/injectionKey'
 import { SwalCustom } from '@/utils/swalUtils'
-import ProductService from '@/services/product.service'
+import CourseService from '@/services/course.service'
 import { optimizeUrl } from '@/utils'
 import { useProductStore } from '@/store/product.store'
 
@@ -153,7 +153,7 @@ function setHeartClick() {
 const handleDeleteItem = async () => {
   const request = async () => {
     try {
-      await ProductService.deleteProduct(product.value.objectId)
+      await CourseService.deleteProduct(product.value.objectId)
       setProductsList((prev) => {
         return prev.filter((item) => item.objectId != product.value.objectId)
       })
